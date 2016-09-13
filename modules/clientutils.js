@@ -372,7 +372,7 @@
          * @return String          Base64 contents string
          */
         this.getBase64 = function getBase64(url, method, data) {
-            return this.encode(this.getBinary(url, method, data));
+            return this.getBinary(url, method, data);
         };
 
         /**
