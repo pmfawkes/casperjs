@@ -376,6 +376,19 @@
         };
 
         /**
+         * Downloads a resource behind an url and returns its base64-encoded
+         * contents.
+         *
+         * @param  String  url     The resource url
+         * @param  String  method  The request method, optional (default: GET)
+         * @param  Object  data    The request data, optional
+         * @return String          Base64 contents string
+         */
+        this.getBase64Org = function getBase64Org(url, method, data) {
+            return this.encode(this.getBinary(url, method, data));
+        };
+
+        /**
          * Retrieves string contents from a binary file behind an url. Silently
          * fails but log errors.
          *
