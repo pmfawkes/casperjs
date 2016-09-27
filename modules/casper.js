@@ -247,7 +247,7 @@ Casper.prototype.back = function back() {
 
 /**
  * Encodes a resource using the base64 algorithm synchronously using
- * client-side XMLHttpRequest.
+ * client-side XMLHttpRequest. Patched for UTF-8
  *
  * NOTE: we cannot use window.btoa() for some strange reasons here.
  *
@@ -256,9 +256,9 @@ Casper.prototype.back = function back() {
  * @param  String  data    The data to send, optional
  * @return string          Base64 encoded result
  */
-Casper.prototype.base64encode = function base64encode(url, method, data) {
+Casper.prototype.base64encodeUTF8 = function base64encodeUTF8(url, method, data) {
     "use strict";
-    return this.callUtils("getBase64", url, method, data);
+    return this.callUtils("getBase64UTF8", url, method, data);
 };
 
 /**
@@ -272,9 +272,9 @@ Casper.prototype.base64encode = function base64encode(url, method, data) {
  * @param  String  data    The data to send, optional
  * @return string          Base64 encoded result
  */
-Casper.prototype.base64encodeOrg = function base64encodeOrg(url, method, data) {
+Casper.prototype.base64encode = function base64encode(url, method, data) {
     "use strict";
-    return this.callUtils("getBase64Org", url, method, data);
+    return this.callUtils("getBase64", url, method, data);
 };
 
 /**
@@ -615,12 +615,12 @@ Casper.prototype.die = function die(message, status) {
  * @param  String  data        Optional data to pass performing the request
  * @return Casper
  */
-Casper.prototype.download = function download(url, targetPath, method, data) {
+Casper.prototype.downloadUTF8 = function downloadUTF8(url, targetPath, method, data) {
     "use strict";
     this.checkStarted();
     var cu = require('clientutils').create(utils.mergeObjects({}, this.options));
     try {
-        fs.write(targetPath, this.base64encode(url, method, data), 'w');
+        fs.write(targetPath, this.base64encodeUTF8(url, method, data), 'w');
         this.emit('downloaded.file', targetPath);
         this.log(f("Downloaded and saved resource in %s", targetPath));
     } catch (e) {
@@ -639,12 +639,12 @@ Casper.prototype.download = function download(url, targetPath, method, data) {
  * @param  String  data        Optional data to pass performing the request
  * @return Casper
  */
-Casper.prototype.downloadOrg = function downloadOrg(url, targetPath, method, data) {
+Casper.prototype.download = function download(url, targetPath, method, data) {
     "use strict";
     this.checkStarted();
     var cu = require('clientutils').create(utils.mergeObjects({}, this.options));
     try {
-        fs.write(targetPath, cu.decode(this.base64encodeOrg(url, method, data)), 'wb');
+        fs.write(targetPath, cu.decode(this.base64encode(url, method, data)), 'wb');
         this.emit('downloaded.file', targetPath);
         this.log(f("Downloaded and saved resource in %s", targetPath));
     } catch (e) {

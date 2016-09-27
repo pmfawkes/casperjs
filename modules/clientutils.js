@@ -364,14 +364,14 @@
 
         /**
          * Downloads a resource behind an url and returns its base64-encoded
-         * contents.
+         * contents. Patched to work with UTF-8
          *
          * @param  String  url     The resource url
          * @param  String  method  The request method, optional (default: GET)
          * @param  Object  data    The request data, optional
          * @return String          Base64 contents string
          */
-        this.getBase64 = function getBase64(url, method, data) {
+        this.getBase64UTF8 = function getBase64UTF8(url, method, data) {
             return this.getBinary(url, method, data);
         };
 
@@ -384,7 +384,7 @@
          * @param  Object  data    The request data, optional
          * @return String          Base64 contents string
          */
-        this.getBase64Org = function getBase64Org(url, method, data) {
+        this.getBase64 = function getBase64(url, method, data) {
             return this.encode(this.getBinary(url, method, data));
         };
 
