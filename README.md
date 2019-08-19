@@ -1,3 +1,8 @@
+# Obsolete
+
+The code in this repository is obsolete.
+
+
 # CasperJS
 
 [![Build Status](https://travis-ci.org/casperjs/casperjs.svg?branch=master)](https://travis-ci.org/casperjs/casperjs)
